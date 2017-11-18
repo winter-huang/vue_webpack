@@ -6,3 +6,9 @@
         </mt-header>
     </header>
 </template>
+
+<style>
+    header{
+        padding-bottom: 40px;
+    }
+</style>

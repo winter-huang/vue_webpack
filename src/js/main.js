@@ -14,6 +14,10 @@ import 'mui/dist/css/mui.min.css';
 //mui扩展字体图标
 import 'mui/examples/hello-mui/css/icons-extra.css';
 
+//导入axios插件
+import axios from 'axios';
+Vue.prototype.axios = axios;
+
 //导入公共组件
 import Common from '../component/common';
 Vue.use(Common);
