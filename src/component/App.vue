@@ -1,5 +1,10 @@
 <template>
     <main>
-        <h1>测试组件</h1>
+        <app-header></app-header>
+        <app-footer></app-footer>
     </main>
 </template>
+
+<script>
+
+</script>
