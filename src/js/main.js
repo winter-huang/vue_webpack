@@ -18,6 +18,12 @@ import 'mui/examples/hello-mui/css/icons-extra.css';
 import axios from 'axios';
 Vue.prototype.axios = axios;
 
+//导入vue-router
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+//导入路由配置文件
+import routerConfig from '../router';
+
 //导入公共组件
 import Common from '../component/common';
 Vue.use(Common);
@@ -26,5 +32,6 @@ new Vue({
     el: '#app',
     render(createNode){
         return createNode(App);
-    }
+    },
+    router: new VueRouter(routerConfig)
 });
