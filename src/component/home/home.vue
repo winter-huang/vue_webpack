@@ -60,7 +60,7 @@
         },
         methods: {
             getCarousel(){
-                this.axios.get('http://vue.studyit.io/api/getlunbo')
+                this.axios.get(this.api.getCarousel)
                         .then(
                                 (response) => {
                                     console.log(response.data.message);

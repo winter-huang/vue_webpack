@@ -28,6 +28,10 @@ import routerConfig from '../router';
 import Common from '../component/common';
 Vue.use(Common);
 
+//导入api_config文件
+import apiConfig from './api_config';
+Vue.prototype.api = apiConfig;
+
 new Vue({
     el: '#app',
     render(createNode){
