@@ -11,4 +11,7 @@
     header{
         padding-bottom: 40px;
     }
+    .mint-header-title{
+        font-size: 18px;
+    }
 </style>
