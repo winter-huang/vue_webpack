@@ -15,7 +15,7 @@
     export default{
         data(){
             return {
-                imgId: '',
+                imgId: this.$route.params.id,
                 imgDetail: [],
                 imgInfo: [],
                 currentPage: 1,
@@ -87,7 +87,6 @@
             }
         },
         created(){
-            this.imgId = this.$route.params.id;
             this.getImgDetail(this.$route.params.id);
             this.getImgInfo(this.$route.params.id);
         }

@@ -15,7 +15,7 @@
     export default{
         data(){
             return{
-                newsId: '',//新闻id
+                newsId: this.$route.params.id,//新闻id
                 newsDetail: '',//新闻详情
                 currentPage: 1,//当前页码
                 postCommentPage: ''//提交评论的页码
@@ -69,7 +69,6 @@
             }
         },
         created(){
-            this.newsId = this.$route.params.id;
             this.getDetail(this.$route.params.id);
         }
     }
@@ -95,8 +94,6 @@
     p span{
         margin-left: 10px;
     }
-    .content img{
-        width: 100% !important;
-    }
+
 
 </style>
