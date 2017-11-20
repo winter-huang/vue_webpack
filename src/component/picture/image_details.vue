@@ -3,8 +3,8 @@
         <h2 v-cloak>{{ imgInfo.title}}</h2>
         <p v-cloak>{{ imgInfo.add_time | date}} <span>{{ imgInfo.click }}次浏览</span></p>
 
-        <img class="preview-img" v-for="(item, index) in imgDetail" :key="item.src" :src="item.src"
-             @click="$preview.open(index, imgDetail)" height="100">
+        <img class="preview-img" v-for="(item, index) in imgDetail" :key="item.src"
+             :src="item.src" @click="$preview.open(index, imgDetail)" height="100">
 
         <p v-cloak>{{ imgInfo.content }}</p>
 

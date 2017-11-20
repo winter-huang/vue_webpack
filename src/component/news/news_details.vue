@@ -26,8 +26,9 @@
                 this.axios.get(this.api.getnewsDetails + id)
                         .then(
                                 (response) => {
-                                    //console.log(response.data.message);
-                                    this.newsDetail = response.data.message[0];
+                                    if(response.status == 200){
+                                        this.newsDetail = response.data.message[0];
+                                    }
                                 }
                         )
             },

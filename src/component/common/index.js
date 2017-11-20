@@ -3,7 +3,7 @@
  */
 import HeaderComponent from './header.vue';
 import FooterComponent from './footer.vue';
-import CommentComponent from '../comment/comment.vue';
+import CommentComponent from './comment.vue';
 
 export default {
     install(Vue){

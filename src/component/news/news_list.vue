@@ -18,21 +18,6 @@
                 </li>
             </ul>
         </div>
-
-        <!--<ul class="mui-table-view">-->
-            <!--<li class="mui-table-view-cell mui-media" v-for="item in newsList" v-bind:key="item.id">-->
-                <!--<router-link v-bind="{to:`/news/details/${item.id}`}">-->
-                    <!--<img class="mui-media-object mui-pull-left" :src="item.img_url">-->
-                    <!--<div class="mui-media-body" v-cloak>-->
-                        <!--{{ item.title }}-->
-                        <!--<p class="mui-ellipsis" v-cloak>{{ item.zhaiyao }}</p>-->
-                        <!--<p v-cloak>发表时间：{{ item.add_time | date }}-->
-                            <!--<span>点击：{{ item.click }}</span>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</router-link>-->
-            <!--</li>-->
-        <!--</ul>-->
     </article>
 </template>
 
@@ -50,10 +35,7 @@
                         .then(
                                 (response) => {
                                     if (response.status == 200) {
-                                        //console.log(response.data.message);
                                         this.newsList = response.data.message;
-                                        //var date = new Date(response.data.message[1].add_time);
-                                        //console.log(date);
                                     }
 
                                 }

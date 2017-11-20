@@ -1,18 +1,19 @@
 /**
  * Created by hyd on 2017/11/18.
  */
+//导入Vue框架
 import Vue from 'vue';
+
+//导入根组件
 import App from '../component/App.vue';
 
+//导入公共组件
+import Common from '../component/common';
+Vue.use(Common);
+
 //导入date过滤器
-// import filters from '../filter';
-// filters.myGetDate();
-Vue.filter('date', function (time) {
-    var date = new Date(time);
-    return `${ date.getFullYear() }
-            - ${ date.getMonth() - 0 + 1 > 9 ? date.getMonth() - 0 + 1 : '0' + (date.getMonth() - 0 + 1) }
-            - ${ date.getDate() > 9 ? date.getDate() : '0' + date.getDate() }`;
-})
+import Filter from '../filter';
+Vue.use(Filter);
 
 //导入less,样式初始化
 import baseLess from '../less/base.less';
@@ -36,10 +37,6 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 //导入路由配置文件
 import routerConfig from '../router';
-
-//导入公共组件
-import Common from '../component/common';
-Vue.use(Common);
 
 //导入api_config文件
 import apiConfig from './api_config';

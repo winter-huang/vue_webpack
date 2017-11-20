@@ -6,8 +6,8 @@
 
         <!--评论内容-->
         <div v-for="item in comments" :key="item.user_name" class="comment">
-            <p>用户昵称：{{ item.user_name }} <span>{{ item.add_time | date }}</span></p>
-            <p>评论内容:{{ item.content }}</p>
+            <p>用户昵称： {{ item.user_name }} <span>{{ item.add_time | date }}</span></p>
+            <p>评论内容： {{ item.content }}</p>
         </div>
 
         <!--翻页-->
@@ -18,7 +18,7 @@
         </div>
 
         <!--添加评论-->
-        <textarea name="" id="" cols="30" rows="5" v-model="commentContent"></textarea>
+        <textarea name="" placeholder="请输入评论内容..." cols="30" rows="5" v-model="commentContent"></textarea>
         <button @click="postComment(commentContent)" href="#comments">提交评论</button>
     </article>
 </template>
@@ -34,11 +34,11 @@
         props: ['id','pageNum','postCommentPage'],
         methods: {
             getComments(id, pageNum){
-                this.axios.get('http://vue.studyit.io/api/getcomments/' + id + '?pageindex=' + pageNum)
+                this.axios.get(this.api.getComments + id + '?pageindex=' + pageNum)
                         .then(
                                 (response) => {
                                     if (response.status == 200) {
-                                        console.log(response.data.message);
+                                        //console.log(response.data.message);
                                         this.comments = response.data.message;
                                     }
                                 }
@@ -80,7 +80,7 @@
     }
 
     .comment {
-        padding-top: 4px;
+        padding: 4px 4px 0 4px;
         border-bottom: 1px solid #aaa;
     }
 
@@ -99,7 +99,7 @@
         margin: 10px;
     }
     #toHere{
-        height: 30px;
+        height: 32px;
     }
 
     textarea{

@@ -41,12 +41,13 @@
                 this.axios.get(this.api.getImgList + id)
                         .then(
                                 (response) => {
-                                    //console.log(response.data.message);
-                                    this.imgs = response.data.message;
-                                    //console.log(response.data.message.length == 0);
-                                    //如果没返回数据为空的时候给定一个id
-                                    if (response.data.message.length == 0) {
-                                        this.getImgList(24);
+                                    if(response.status == 200){
+                                        this.imgs = response.data.message;
+                                        //console.log(response.data.message.length == 0);
+                                        //如果没返回数据为空的时候给定一个id
+                                        if (response.data.message.length == 0) {
+                                            this.getImgList(24);
+                                        }
                                     }
                                 }
                         )
@@ -55,8 +56,9 @@
                 this.axios.get(this.api.getImgcategory)
                         .then(
                                 (response) => {
-                                    //console.log(response.data.message);
-                                    this.imgCategory = response.data.message;
+                                    if(response.status == 200){
+                                        this.imgCategory = response.data.message;
+                                    }
                                 }
                         )
             },
