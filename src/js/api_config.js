@@ -13,4 +13,8 @@ export default {
     getImgInfo: `${domain}/getimageInfo/`,//获取图片描述
     getComments: `${domain}/getcomments/`,//获取评论
     postComment: `${domain}/postcomment/`,//添加评论
+    getGoodsList: `${domain}/getgoods?`,//商品列表
+    getGoodsDetails: `${domain}/goods/getdesc/`,//商品描述
+    getGoodsInfo: `${domain}/goods/getinfo/`,//商品参数
+    getGoodsImages: `${domain}/getthumimages/`,//商品轮播图
 }
