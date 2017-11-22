@@ -33,7 +33,7 @@
                                             temp[i].w = 400;
                                             temp[i].h = 400;
                                         }
-                                        this.imgDetail = response.data.message;
+                                        this.imgDetail = temp;
                                     }
                                 }
                         )

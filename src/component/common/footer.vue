@@ -9,8 +9,8 @@
                 <span class="mui-icon mui-icon-extra mui-icon-extra-gift"></span>
                 <span class="mui-tab-label">商品</span>
             </router-link>
-            <router-link class="mui-tab-item" to="#tabbar-with-contact">
-                <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">0</span></span>
+            <router-link class="mui-tab-item" to="/shopcart">
+                <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" v-cloak>{{ goodsSum }}</span></span>
                 <span class="mui-tab-label">购物车</span>
             </router-link>
             <router-link class="mui-tab-item" to="#tabbar-with-map">
@@ -20,3 +20,26 @@
         </nav>
     </footer>
 </template>
+
+<script>
+    export default{
+        data(){
+            return {
+                goodsSum: 0,
+                goodsData: JSON.parse(localStorage.getItem('goodsCart')) || {}
+            }
+        },
+        methods: {
+            getGoodsTotalNum(){
+                var sum = 0;
+                for (var key in this.goodsData) {
+                    sum += this.goodsData[key][0];
+                }
+                this.goodsSum = sum;
+            }
+        },
+        created(){
+            this.getGoodsTotalNum();
+        }
+    }
+</script>

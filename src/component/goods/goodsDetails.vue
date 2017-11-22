@@ -7,9 +7,8 @@
             <!--轮播图-->
             <mt-swipe :auto="4000">
                 <mt-swipe-item v-for="item in carouselImgs" v-bind:key="item.src">
-                    <router-link :to="item.src">
-                        <img :src="item.src" alt="">
-                    </router-link>
+                    <img class="preview-img" v-for="(item, index) in carouselImgs" :key="item.src"
+                         :src="item.src" @click="$preview.open(index, carouselImgs)" height="100">
                 </mt-swipe-item>
             </mt-swipe>
             <!-- 价格 -->
@@ -18,19 +17,17 @@
                     goodsInfo.sell_price }}</em></div>
                 <div><span>购买数量：</span>
                     <!--数字输入框 -->
-                    <div class="mui-numbox">
-                        <button class="mui-btn mui-btn-numbox-minus" @click="getBuyNum(buyNum-1)">-</button>
-                        <input class="mui-input-numbox" type="number" v-model="buyNum" @blur="getInputNum">
-                        <button class="mui-btn mui-btn-numbox-plus" @click="getBuyNum(buyNum-0+1)">+</button>
-                    </div>
+                    <app-buyNum :buyN="buyNum" :id="goodsId" @change="getBuyNum"></app-buyNum>
                     <span>剩余数量：{{ goodsInfo.stock_quantity }} 件</span>
                 </div>
             </div>
             <!-- 按钮 -->
             <div class="mui-card-footer">
-                <button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined">结算</button>
+                <button type="button" class="mui-btn mui-btn-success mui-btn-block
+mui-btn-outlined" @click="jiesuan">结算</button>
                 <div></div>
-                <button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined">加入购物车</button>
+                <button type="button" class="mui-btn mui-btn-success mui-btn-block mui-btn-outlined"
+                @click="joinCart">加入购物车</button>
             </div>
         </div>
 
@@ -73,61 +70,59 @@
                 goodsInfo: {},
                 buyNum: 0,
                 selected: 'introduce',
-                carouselImgs: '',
+                carouselImgs: '',//轮播图图片
                 commentPage: 1,//当前评论的页码
-                postCommentPage: ''//提交评论的页码
+                postCommentPage: '',//提交评论的页码
+                //goodsStock: '',//商品的剩余数量
             }
         },
         methods: {
+            //获取商品描述介绍
             getGoodsDetails(id){
                 this.axios.get(this.api.getGoodsDetails + id)
                         .then(
                                 (response) => {
                                     if (response.status == 200) {
                                         this.goodsDetails = response.data.message[0];
-                                        console.log(response.data.message);
+                                        //console.log(response.data.message);
                                     }
                                 }
                         )
             },
+            //获取商品信息
             getGoodsInfo(id){
                 this.axios.get(this.api.getGoodsInfo + id)
                         .then(
                                 (response) => {
                                     if (response.status == 200) {
                                         this.goodsInfo = response.data.message[0];
-                                        console.log(response.data.message[0]);
+                                        //this.goodsStock = this.goodsInfo.stock_quantity;
+                                        //console.log(response.data.message[0]);
                                     }
                                 }
                         )
             },
-            getBuyNum(num){
-                if (num < 0) {
-                    return;
-                }
-                if (num > this.goodsInfo.stock_quantity) {
-                    alert(`商品剩余数量${this.goodsInfo.stock_quantity}件`);
-                    return;
-                }
+            //获取到子组件返回的购买数量
+            getBuyNum(num) {
                 this.buyNum = num;
             },
-            getInputNum(){
-                if(this.buyNum > this.goodsInfo.stock_quantity){
-                    alert(`商品剩余数量${this.goodsInfo.stock_quantity}件`);
-                    return;
-                }
-            },
+            //获取商品的轮播图片
             getGoodsImages(id){
                 this.axios.get(this.api.getGoodsImages + id)
                         .then(
                                 (response) => {
                                     if (response.status == 200) {
-                                        this.carouselImgs = response.data.message;
-                                        console.log(response.data.message);
+                                        var temp = response.data.message;
+                                        for (var i = 0; i < temp.length; i++) {
+                                            temp[i].w = 400;
+                                            temp[i].h = 400;
+                                        }
+                                        this.carouselImgs = temp;
                                     }
                                 }
                         )
             },
+            //获取商品的评论
             getCommentsPage(pageNum, comments){
                 if (pageNum <= 0) {
                     alert('当前为第一页');
@@ -142,6 +137,7 @@
                 this.commentPage = pageNum;
                 document.getElementById('toHere').scrollIntoView();
             },
+            //添加商品的评论
             postComment(commentContent){
                 if(commentContent == ''){
                     alert('评论内容不能为空');
@@ -162,12 +158,35 @@
                                     }
                                 }
                         )
+            },
+            //加入购物车
+            joinCart(){
+                if(this.buyNum > this.goodsInfo.stock_quantity){
+                    alert(`该商品库存不足,最多可购买${this.goodsInfo.stock_quantity}件`);
+                    this.buyNum = this.goodsInfo.stock_quantity;
+                    return;
+                }
+                let oldGoodsCart = JSON.parse(localStorage.getItem('goodsCart')) || {};
+                oldGoodsCart[this.goodsId] = [this.buyNum,this.goodsInfo.stock_quantity];
+                localStorage.setItem('goodsCart', JSON.stringify(oldGoodsCart));
+                alert('成功加入购物车');
+                location.reload();
+            },
+            //将购物车里某个商品的购买数量渲染到页面
+            oldBuyNum(){
+                let oldGoodsCart = JSON.parse(localStorage.getItem('goodsCart')) || {};
+                this.buyNum = oldGoodsCart[this.goodsId] ? oldGoodsCart[this.goodsId][0] : 0;
+            },
+            //结算
+            jiesuan(){
+                location.href = '/#/shopcart';
             }
         },
         created(){
             this.getGoodsDetails(this.goodsId);
             this.getGoodsInfo(this.goodsId);
             this.getGoodsImages(this.goodsId);
+            this.oldBuyNum();
         }
 
     }

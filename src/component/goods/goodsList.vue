@@ -49,7 +49,6 @@
                 this.axios.get(this.api.getGoodsList + `pageindex=${this.pageIndex}`)
                         .then(
                                 (response) => {
-                                    console.log(response.data.message);
                                     if (response.status == 200) {
                                         // ...是分解数组，然后再push
                                         this.goodsList.push(...response.data.message);

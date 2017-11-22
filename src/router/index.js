@@ -11,6 +11,8 @@ import imagesDetailsComponent from '../component/picture/image_details.vue';
 import goodsListComponent from '../component/goods/goodsList.vue';
 import goodsDetailsComponent from '../component/goods/goodsDetails.vue';
 
+import shopcartComponent from '../component/shopcart/shopcart.vue';
+
 export default {
     routes: [
         {path: '/', redirect: '/index'},
@@ -25,7 +27,9 @@ export default {
 
         //商品功能
         {path: '/goods/list', component: goodsListComponent},
-        {path: '/goods/details/:id', component: goodsDetailsComponent}
+        {path: '/goods/details/:id', component: goodsDetailsComponent},
+
+        {path: '/shopcart', component: shopcartComponent}
 
     ]
 }

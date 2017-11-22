@@ -17,4 +17,5 @@ export default {
     getGoodsDetails: `${domain}/goods/getdesc/`,//商品描述
     getGoodsInfo: `${domain}/goods/getinfo/`,//商品参数
     getGoodsImages: `${domain}/getthumimages/`,//商品轮播图
+    getBuyList: `${domain}/goods/getshopcarlist/`,//购物车列表
 }
