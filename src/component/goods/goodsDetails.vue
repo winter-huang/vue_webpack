@@ -1,5 +1,5 @@
 <template>
-    <article class="goods-detail">
+    <article class="goods-detail" id="top">
         <!-- 商品购买 -->
         <div class="mui-card">
             <!-- 名称 -->
@@ -73,7 +73,6 @@ mui-btn-outlined" @click="jiesuan">结算</button>
                 carouselImgs: '',//轮播图图片
                 commentPage: 1,//当前评论的页码
                 postCommentPage: '',//提交评论的页码
-                //goodsStock: '',//商品的剩余数量
             }
         },
         methods: {
@@ -84,7 +83,6 @@ mui-btn-outlined" @click="jiesuan">结算</button>
                                 (response) => {
                                     if (response.status == 200) {
                                         this.goodsDetails = response.data.message[0];
-                                        //console.log(response.data.message);
                                     }
                                 }
                         )
@@ -96,14 +94,12 @@ mui-btn-outlined" @click="jiesuan">结算</button>
                                 (response) => {
                                     if (response.status == 200) {
                                         this.goodsInfo = response.data.message[0];
-                                        //this.goodsStock = this.goodsInfo.stock_quantity;
-                                        //console.log(response.data.message[0]);
                                     }
                                 }
                         )
             },
             //获取到子组件返回的购买数量
-            getBuyNum(num) {
+            getBuyNum(id, num) {
                 this.buyNum = num;
             },
             //获取商品的轮播图片
@@ -166,11 +162,12 @@ mui-btn-outlined" @click="jiesuan">结算</button>
                     this.buyNum = this.goodsInfo.stock_quantity;
                     return;
                 }
-                let oldGoodsCart = JSON.parse(localStorage.getItem('goodsCart')) || {};
-                oldGoodsCart[this.goodsId] = [this.buyNum,this.goodsInfo.stock_quantity];
-                localStorage.setItem('goodsCart', JSON.stringify(oldGoodsCart));
+                this.$store.commit('updateTotalNum', {
+                    id: this.goodsId,
+                    total: this.buyNum,
+                    stock: this.goodsInfo.stock_quantity
+                });
                 alert('成功加入购物车');
-                location.reload();
             },
             //将购物车里某个商品的购买数量渲染到页面
             oldBuyNum(){
@@ -187,6 +184,7 @@ mui-btn-outlined" @click="jiesuan">结算</button>
             this.getGoodsInfo(this.goodsId);
             this.getGoodsImages(this.goodsId);
             this.oldBuyNum();
+            document.body.scrollTop = 0;
         }
 
     }

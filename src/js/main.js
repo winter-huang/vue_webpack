@@ -32,12 +32,6 @@ import 'mui/examples/hello-mui/css/icons-extra.css';
 import axios from 'axios';
 Vue.prototype.axios = axios;
 
-//导入vue-router
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
-//导入路由配置文件
-import routerConfig from '../router';
-
 //导入api_config文件
 import apiConfig from './api_config';
 Vue.prototype.api = apiConfig;
@@ -46,10 +40,27 @@ Vue.prototype.api = apiConfig;
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview);
 
+//导入vue-router插件
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+//导入路由配置文件
+import routerConfig from '../router';
+
+//导入Vuex插件
+import Vuex from 'vuex';
+Vue.use(Vuex);
+//导入vuex配置文件
+import store from '../vuex';
+
 new Vue({
     el: '#app',
     render(createNode){
         return createNode(App);
     },
-    router: new VueRouter(routerConfig)
+    //vue-router插件 实例化
+    router: new VueRouter(routerConfig),
+    //vuex插件 实例化
+    store: new Vuex.Store(store)
 });
+
+

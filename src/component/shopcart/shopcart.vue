@@ -11,16 +11,11 @@
                     <ul>
                         <li v-cloak>￥{{ item.sell_price }}</li>
                         <li>
-                            <!--<div class="mui-numbox">-->
-                            <!--<button class="mui-btn mui-btn-numbox-minus">-</button>-->
-                            <!--<input class="mui-input-numbox" type="number">-->
-                            <!--<button class="mui-btn mui-btn-numbox-plus">+</button>-->
-                            <!--</div>-->
                             <app-buyNum  :id="item.id" :stock="buyGoodsData[item.id][1]"
                                         @change="getBuyNum"></app-buyNum>
                         </li>
                         <li>
-                            <span @click="delGoods(item.id)">删除</span>
+                            <a href="javascript:void(0)" @click="delGoods(item.id)">删除</a>
                         </li>
                     </ul>
                 </div>
@@ -49,10 +44,7 @@
         data(){
             return {
                 buyGoodsList: [],
-                buyGoodsData: {},
-                buyNum: '',
-                id: ''
-
+                buyGoodsData: {}
             }
         },
         methods: {
@@ -64,7 +56,6 @@
                             .then(
                                     (response) => {
                                         if (response.status == 200) {
-                                            //console.log(response.data.message);
                                             var temp = response.data.message;
                                             for (var i = 0; i < temp.length; i++) {
                                                 temp[i].isSelected = true;
@@ -75,16 +66,18 @@
                             )
                 }
             },
-            getBuyNum(num, id) {
-                this.buyNum = num;
-                this.id = id;
-                //console.log(num, id);
+            getBuyNum(id, num, stock) {
+//                this.buyGoodsData[id] = [num, this.buyGoodsData[id][1]];
+                this.$store.commit('updateTotalNum',{
+                    id: id,
+                    total: num,
+                    stock: stock
+                });
             },
             delGoods(id){
                 if(confirm('是否删除')){
-                    this.buyGoodsList = delete this.buyGoodsData[id];
-                    localStorage.setItem('goodsCart', JSON.stringify(this.buyGoodsData));
-                    location.reload();
+                    this.$store.commit('delGoods', id);
+                    this.buyGoodsList = this.buyGoodsList.filter(v => v.id != id);
                 }
             }
         },
@@ -96,7 +89,7 @@
                 var sum = 0;
                 for (var i = 0; i < this.buyGoodsList.length; i++) {
                     if (this.buyGoodsList[i].isSelected) {
-                        sum += this.buyGoodsData[this.buyGoodsList[i].id][0];
+                        sum += this.$store.state.totalNum[this.buyGoodsList[i].id][0];
                     }
 
                 }
@@ -106,19 +99,13 @@
                 var sum = 0;
                 for (var i = 0; i < this.buyGoodsList.length; i++) {
                     if (this.buyGoodsList[i].isSelected) {
-                        var temp = this.buyGoodsData[this.buyGoodsList[i].id][0] * this.buyGoodsList[i].sell_price;
+                        var temp = this.$store.state.totalNum[this.buyGoodsList[i].id][0] * this.buyGoodsList[i].sell_price;
                         sum += temp;
                     }
                 }
                 return sum;
             }
 
-        },
-        watch: {
-            buyNum(){
-                this.buyGoodsData[this.id] = [this.buyNum, this.buyGoodsData[this.id][1]];
-                localStorage.setItem('goodsCart', JSON.stringify(this.buyGoodsData));
-            }
         }
 
     }

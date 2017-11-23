@@ -94,7 +94,7 @@
 
     .page span {
         display: inline-block;
-        width: 60px;
+        width: 56px;
         text-align: center;
         margin: 10px;
     }

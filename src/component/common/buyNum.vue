@@ -17,6 +17,7 @@
         props: ['buyN', 'id', 'stock'],
         methods: {
             getBuyNum(num, id){
+//                this.goodsData = JSON.parse(localStorage.getItem('goodsCart')) || {};
                 if (num < 0) {
                     return;
                 }
@@ -52,7 +53,10 @@
                 }
             },
             buyNum(newV){
-                this.$emit('change', newV - 0, this.id);
+//                this.goodsData[this.id] = [this.buyNum, this.goodsData[this.id][1]];
+//                this.$store.commit('getTotalNum', this.goodsData);
+                this.$emit('change', this.id, newV - 0, this.stock);
+
             }
         },
         created(){
