@@ -1,7 +1,9 @@
 /**
  * Created by hyd on 2017/11/23.
  */
+//这里导入vue可以使用vue的api
 import Vue from 'vue';
+
 export default {
     // 这个配置项就相当于咱们的data选项
     // 区别是这里的数据共享, 那都可以通过$store.state.属性名的方式使用
